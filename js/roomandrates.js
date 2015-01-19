@@ -223,11 +223,10 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
 
 }]);
 
-
-$(document).ready(function () {
-    // Pin #2
-    new $.Zebra_Pin($('#update'), {
-        top_spacing: 70
-    });
-
-});
+//$(document).ready(function () {
+//    // Pin #2
+//    new $.Zebra_Pin($('#update'), {
+//        top_spacing: 70
+//    });
+//
+//});
