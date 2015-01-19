@@ -29,7 +29,7 @@
 </header>
 <br><br><br><br>
 
-<div class="container" ng-controller="RoomAndRateController">
+<div class="container" ng-controller="RoomAndRateController" ng-mouseup="mouseup()">
     <div class="row">
         <div class="col-md-4">
             <div class="dropdown">
@@ -45,7 +45,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class="pull-right">
                 <span class="checkbox">
                     <label>
@@ -59,7 +59,7 @@
                     </label>
                 </span>
             </div>
-            <table class="table">
+            <table id="table" class="table none-select" ng-mousedown="mousedown()">
                 <thead>
                 <tr>
                     <th></th>
@@ -76,7 +76,7 @@
                 <tr class="buffer"></tr>
                 <tr ng-repeat="week in days">
                     <th ng-click="weekToggle(week)">Week{{days.indexOf(week)+1}}</th>
-                    <td ng-click="day.toggle()" ng-repeat="day in week"
+                    <td ng-click="day.toggle()" ng-repeat="day in week" ng-mouseenter="day.mouseEnter()"
                         ng-class="{select:day.select, done:day.info.done(), process:day.info.process()}">
                         <span ng-show="day.date.getDate()">
                             <span ng-show="showMonth">{{day.date.getMonth()+1}}월</span> {{day.date.getDate()}}일
@@ -91,7 +91,7 @@
                                 </div>
                                 <div ng-show="day.info.fee"><i class="fa fa-krw"></i> {{day.info.fee}}</div>
                                 <div ng-show="day.info.serviceTypes">
-                                    <div ng-repeat="type in day.info.serviceTypes">{{type.name}}</div>
+                                    <div class="serviceType" ng-repeat="type in day.info.serviceTypes">{{type.name}}</div>
                                 </div>
                             </div>
                         </span>
@@ -101,7 +101,12 @@
             </table>
 
         </div>
-        <div class="col-md-5">
+
+
+
+        <!-- 업데이트 -->
+
+        <div class="col-md-4">
             <div class="panel panel-default" id="update">
                 <div class="panel-heading">업데이트</div>
 

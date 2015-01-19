@@ -27,6 +27,8 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
 
 
     $scope.dayToggle = function (day) {
+        if ($scope.days == undefined)
+            return;
         for (var i = 0; i < $scope.days.length; i++) {
             if ($scope.days[i][day].toggle == undefined)
                 continue;
@@ -94,6 +96,11 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
                 return true;
             }
         };
+        this.mouseEnter = function () {
+            if (isMouseDown) {
+                this.toggle();
+            }
+        };
         this.toggle = function () {
             if (this.select) {
                 this.select = false;
@@ -107,7 +114,6 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
     var update = function () {
         var result = [];
         var days = [];
-        var week = [];
         var start = newDate($scope.start);
 
         var end = newDate($scope.end);
@@ -150,10 +156,23 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
         return new Date(date.getFormattedString());
     }
 
+    var isMouseDown = false;
+
+    $scope.mousedown = function () {
+        isMouseDown = true;
+        return false; // prevent text selection
+    };
+
+
+    $(document).mouseup(function () {
+        isMouseDown = false;
+    });
+
+
 }]);
 
-$(document).ready(function () {
 
+$(document).ready(function () {
     // Pin #2
     new $.Zebra_Pin($('#update'), {
         top_spacing: 70

@@ -1,5 +1,5 @@
 .select {
-    border: 2px solid red !important;
+    background-color:#eee;
 }
 
 .checkbox-inline {
@@ -35,14 +35,29 @@
 }
 
 .done {
-    background-color: #DFF0D8;
+    color: green;
 }
 
 .process {
-    background-color: #FCF8E3;
+    color: red;
 }
 
 .detail{
     padding:2px;
     font-size:11px;
+}
+
+.serviceType{
+    height: 13px;
+    overflow: hidden;
+}
+
+
+.none-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
