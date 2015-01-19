@@ -182,7 +182,6 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
 
     $scope.mousedown = function (event) {
         selectedCell = $(event.target);
-        console.log(selectedCell);
         isMouseDown = true;
         return false; // prevent text selection
     };
@@ -198,6 +197,28 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
             }
         }
     });
+
+    $scope.refresh = function () {
+        if ($scope.days == undefined)
+            return;
+        for (var i = 0; i < $scope.days.length; i++) {
+            for (var j = 0; j < $scope.days[i].length; j++) {
+                $scope.days[i][j].select = false;
+            }
+        }
+    };
+
+    $scope.isSelectAny = function () {
+        if ($scope.days == undefined)
+            return false;
+        for (var i = 0; i < $scope.days.length; i++) {
+            for (var j = 0; j < $scope.days[i].length; j++) {
+                if ($scope.days[i][j].select)
+                    return true;
+            }
+        }
+        return false;
+    };
 
 
 }]);

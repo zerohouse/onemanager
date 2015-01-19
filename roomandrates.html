@@ -5,6 +5,7 @@
     <link href="plugin/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="plugin/angular/datepicker/styles/index.css" rel="stylesheet" media="screen">
     <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="plugin/bootstrap/dropdown/betterdropdown.css" rel="stylesheet">
     <link href="css/default.css" rel="stylesheet" media="screen">
     <link href="css/roomandrates.css" rel="stylesheet" media="screen">
     <title>원매니저 - Room & Rate</title>
@@ -33,9 +34,9 @@
     <div class="row">
         <div class="col-md-4">
             <div class="dropdown">
-                <a class="dropdown-toggle btn btn-primary">
-                    {{(start|date:"yyyy년 M월 d일")||"날짜를 선택해주세요"}} ~ {{(end|date:"yyyy년 M월 d일")||"날짜를 선택해주세요"}}
-                </a>
+                <h4 class="dropdown-toggle pointer">
+                    {{(start|date:"yyyy년 M월 d일 ~")||"조정할 기간을 "}}  {{(end|date:"yyyy년 M월 d일")||"선택해 주세요!"}}
+                </h4>
 
                 <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation()">
                     <div date-range start="start" end="end"></div>
@@ -44,22 +45,51 @@
         </div>
     </div>
 
+
     <div class="row">
         <div class="col-md-8">
             <div class="pull-right">
-                <span class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-init="showDetail = true" ng-model="showDetail"> 상세
-                    </label>
-                </span>
 
-                 <span class="checkbox">
-                    <label>
-                        <input ng-model="showMonth" type="checkbox"> 월
-                    </label>
-                </span>
+
+                <div class="btn-group">
+                    <button class="btn btn-success">상세보기</button>
+                    <button data-toggle="dropdown" class="btn btn-success dropdown-toggle" data-placeholder="false">
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu noclose">
+                        <li><input id="op1" ng-init="showAllotment = true" ng-model="showAllotment"
+                                   type="checkbox"><label for="op1">객실수</label></li>
+                        <li><input id="op5" ng-init="showFee = true" ng-model="showFee" type="checkbox"><label
+                                for="op5">가격</label></li>
+                        <li><input id="op3" ng-model="showSellstate" type="checkbox"><label for="op3">판매상태</label></li>
+                        <li><input id="op4" ng-model="showCutoff" type="checkbox"><label for="op4">Cut Off</label></li>
+                        <li><input id="op2" ng-model="showServiceTypes" type="checkbox"><label for="op2">상품종류</label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="btn-group">
+                    <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">날짜형식<span
+                            class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <input ng-model="dateFormat" ng-init="dateFormat='d일'" type="radio" id="ex1_1" name="ex1" value="d일">
+                            <label for="ex1_1">dd일</label>
+                        </li>
+                        <li>
+                            <input ng-model="dateFormat" type="radio" id="ex1_2" name="ex1" value="M월 d일">
+                            <label for="ex1_2">MM월 dd일</label>
+                        </li>
+                        <li>
+                            <input ng-model="dateFormat" type="radio" id="ex1_3" name="ex1" value="yyyy-M-d">
+                            <label for="ex1_3">yyyy-MM-dd</label>
+                        </li>
+                    </ul>
+                </div>
+                <span ng-show="isSelectAny()" class="btn btn-danger" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> 선택 초기화</span>
             </div>
-            <table id="table" class="table none-select" ng-mousedown="mousedown($event)">
+
+            <!-- 테이블 -->
+            <table id="table" class="table none-select cursor" ng-mousedown="mousedown($event)">
                 <thead>
                 <tr>
                     <th></th>
@@ -79,19 +109,23 @@
                     <td ng-click="day.toggle()" ng-repeat="day in week" ng-mouseenter="day.mouseEnter($event)"
                         ng-class="{select:day.select, done:day.info.done(), process:day.info.process()}">
                         <span ng-show="day.date.getDate()">
-                            <span ng-show="showMonth">{{day.date.getMonth()+1}}월</span> {{day.date.getDate()}}일
-                            <div class="detail" ng-show="showDetail">
-                                <div ng-show="day.info.allotment"><i class="fa fa-building"></i> {{day.info.allotment}}
+                           {{ day.date|date:dateFormat}}
+                            <div class="detail">
+
+                                <div ng-show="day.info.allotment&&showAllotment"><i class="fa fa-building"></i>
+                                    {{day.info.allotment}}
+
                                 </div>
-                                <div ng-show="day.info.sellstate"><i class="fa fa-question"></i>
+                                <div ng-show="day.info.sellstate&&showSellstate"><i class="fa fa-question"></i>
                                     {{day.info.sellstate.name}}
                                 </div>
-                                <div ng-show="day.info.cutoff"><i class="fa fa-exclamation-circle"></i>
+                                <div ng-show="day.info.cutoff&&showCutoff"><i class="fa fa-exclamation-circle"></i>
                                     {{day.info.cutoff}}
                                 </div>
-                                <div ng-show="day.info.fee"><i class="fa fa-krw"></i> {{day.info.fee}}</div>
-                                <div ng-show="day.info.serviceTypes">
-                                    <div class="serviceType" ng-repeat="type in day.info.serviceTypes">{{type.name}}</div>
+                                <div ng-show="day.info.fee&&showFee"><i class="fa fa-krw"></i> {{day.info.fee}}</div>
+                                <div ng-show="day.info.serviceTypes&&showServiceTypes">
+                                    <div class="serviceType" ng-repeat="type in day.info.serviceTypes">{{type.name}}
+                                    </div>
                                 </div>
                             </div>
                         </span>
@@ -101,7 +135,6 @@
             </table>
 
         </div>
-
 
 
         <!-- 업데이트 -->
@@ -118,8 +151,8 @@
                              <span ng-repeat="week in days">
                             <span class="btn btn-border" ng-repeat="day in week" ng-click="day.toggle()"
                                   ng-show="day.select">
-                            <span ng-show="showMonth">{{day.date.getMonth()+1}}월</span>
-                            {{day.date.getDate()}}일 </span></span>
+
+                            {{ day.date|date:dateFormat}} </span></span>
                             </td>
                         </tr>
 
@@ -195,10 +228,13 @@
     </div>
 </div>
 
+
 <script src="js/proto.js"></script>
+<script src="plugin/jquery/jquery.js"></script>
 <script src="plugin/angular/angular.js"></script>
 <script src="plugin/angular/ui-bootstrap-tpls.min.js"></script>
-<script src="plugin/jquery/jquery.js"></script>
+<script src="plugin/bootstrap/bootstrap.min.js"></script>
+<script src="plugin/bootstrap/dropdown/betterdropdown.js"></script>
 <script src="plugin/jquery/zebra_pin.js"></script>
 <!-- build:js module.min.js -->
 <script src="plugin/angular/datepicker/scripts/datePicker.js"></script>
