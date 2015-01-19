@@ -59,7 +59,7 @@
                     </label>
                 </span>
             </div>
-            <table id="table" class="table none-select" ng-mousedown="mousedown()">
+            <table id="table" class="table none-select" ng-mousedown="mousedown($event)">
                 <thead>
                 <tr>
                     <th></th>
@@ -76,7 +76,7 @@
                 <tr class="buffer"></tr>
                 <tr ng-repeat="week in days">
                     <th ng-click="weekToggle(week)">Week{{days.indexOf(week)+1}}</th>
-                    <td ng-click="day.toggle()" ng-repeat="day in week" ng-mouseenter="day.mouseEnter()"
+                    <td ng-click="day.toggle()" ng-repeat="day in week" ng-mouseenter="day.mouseEnter($event)"
                         ng-class="{select:day.select, done:day.info.done(), process:day.info.process()}">
                         <span ng-show="day.date.getDate()">
                             <span ng-show="showMonth">{{day.date.getMonth()+1}}월</span> {{day.date.getDate()}}일

@@ -76,6 +76,7 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
     var Day = function (date) {
         this.date = date;
         this.select = false;
+        this.dragSelect = false;
         this.info = {
             done: function () {
                 if (this.allotment == undefined)
@@ -96,9 +97,30 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
                 return true;
             }
         };
-        this.mouseEnter = function () {
+        this.mouseEnter = function (event) {
             if (isMouseDown) {
-                this.toggle();
+                toggleDragArea(selectedCell, $(event.target));
+            }
+
+            function toggleDragArea(cell, cell2) {
+                var startcol = cell.index() < cell2.index() ? cell.index() : cell2.index();
+                var endcol = cell.index() < cell2.index() ? cell2.index() : cell.index();
+                var startrow = cell.parent().index() < cell2.parent().index() ? cell.parent().index() : cell2.parent().index();
+                var endrow = cell.parent().index() < cell2.parent().index() ? cell2.parent().index() : cell.parent().index();
+                for (var i = startrow; i <= endrow; i++) {
+                    for (var j = startcol; j <= endcol; j++) {
+                        if ($scope.days[i - 1] == undefined)
+                            continue;
+                        if ($scope.days[i - 1][j - 1] == undefined)
+                            continue;
+                        if ($scope.days[i - 1][j - 1].toggle == undefined)
+                            continue;
+                        if ($scope.days[i - 1][j - 1].dragSelect == true)
+                            continue;
+                        $scope.days[i - 1][j - 1].toggle();
+                        $scope.days[i - 1][j - 1].dragSelect = true;
+                    }
+                }
             }
         };
         this.toggle = function () {
@@ -108,7 +130,6 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
             }
             this.select = true;
         }
-
     }
 
     var update = function () {
@@ -156,9 +177,12 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
         return new Date(date.getFormattedString());
     }
 
+    var selectedCell;
     var isMouseDown = false;
 
-    $scope.mousedown = function () {
+    $scope.mousedown = function (event) {
+        selectedCell = $(event.target);
+        console.log(selectedCell);
         isMouseDown = true;
         return false; // prevent text selection
     };
@@ -166,6 +190,13 @@ app.controller('RoomAndRateController', ['$scope', function ($scope) {
 
     $(document).mouseup(function () {
         isMouseDown = false;
+        if ($scope.days == undefined)
+            return;
+        for (var i = 0; i < $scope.days.length; i++) {
+            for (var j = 0; j < $scope.days[i].length; j++) {
+                $scope.days[i][j].dragSelect = false;
+            }
+        }
     });
 
 

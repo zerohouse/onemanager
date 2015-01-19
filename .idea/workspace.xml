@@ -27,8 +27,8 @@
       <file leaf-file-name="roomandrates.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/roomandrates.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.518518" vertical-offset="1000" max-vertical-offset="2790">
-              <caret line="100" column="30" selection-start-line="100" selection-start-column="30" selection-end-line="100" selection-end-column="30" />
+            <state vertical-scroll-proportion="-11.851851" vertical-offset="1345" max-vertical-offset="3255">
+              <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -67,8 +67,8 @@
       <file leaf-file-name="roomandrates.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/roomandrates.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.39854193" vertical-offset="647" max-vertical-offset="3225">
-              <caret line="65" column="56" selection-start-line="65" selection-start-column="56" selection-end-line="65" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.1798299" vertical-offset="1472" max-vertical-offset="3225">
+              <caret line="108" column="30" selection-start-line="108" selection-start-column="30" selection-end-line="108" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -140,11 +140,11 @@
         <option value="$PROJECT_DIR$/css/icons.css" />
         <option value="$PROJECT_DIR$/css/default.css" />
         <option value="$PROJECT_DIR$/js/dragselect.js" />
-        <option value="$PROJECT_DIR$/js/roomandrates.js" />
-        <option value="$PROJECT_DIR$/js/roomandrates.js" />
         <option value="$PROJECT_DIR$/css/roomandrates.css" />
         <option value="$PROJECT_DIR$/roomandrates.html" />
         <option value="$PROJECT_DIR$/roomandrates.html" />
+        <option value="$PROJECT_DIR$/js/roomandrates.js" />
+        <option value="$PROJECT_DIR$/js/roomandrates.js" />
       </list>
     </option>
   </component>
@@ -152,8 +152,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="68" />
-    <option name="y" value="23" />
+    <option name="x" value="51" />
+    <option name="y" value="53" />
     <option name="width" value="1334" />
     <option name="height" value="1007" />
   </component>
@@ -303,7 +303,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="68" y="23" width="1334" height="1007" extended-state="0" />
+    <frame x="51" y="53" width="1334" height="1007" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -615,14 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/roomandrates.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.518518" vertical-offset="1000" max-vertical-offset="2790">
-          <caret line="100" column="30" selection-start-line="100" selection-start-column="30" selection-end-line="100" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/roomandrates.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="73" max-vertical-offset="1020">
@@ -631,10 +623,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/roomandrates.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.851851" vertical-offset="1345" max-vertical-offset="3255">
+          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/roomandrates.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39854193" vertical-offset="647" max-vertical-offset="3225">
-          <caret line="65" column="56" selection-start-line="65" selection-start-column="56" selection-end-line="65" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.1798299" vertical-offset="1472" max-vertical-offset="3225">
+          <caret line="108" column="30" selection-start-line="108" selection-start-column="30" selection-end-line="108" selection-end-column="30" />
           <folding />
         </state>
       </provider>
