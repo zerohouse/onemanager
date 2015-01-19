@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0">
+    <link href="plugin/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="plugin/angular/datepicker/styles/index.css" rel="stylesheet" media="screen">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/default.css" rel="stylesheet" media="screen">
+    <link href="css/roomandrates.css" rel="stylesheet" media="screen">
+    <title>원매니저 - Room & Rate</title>
+</head>
+<body ng-app="onemanager">
+<header class="navbar navbar-default navbar-fixed-top bs-docs-nav" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">One Manager</a>
+        </div>
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav">
+                <li><a href="#">객실</a></li>
+                <li><a href="#">예약</a></li>
+                <li><a href="#">프로모션</a></li>
+                <li><a href="#">호텔정보</a></li>
+            </ul>
+
+        </div>
+    </div>
+</header>
+<br><br><br><br>
+
+<div class="container" ng-controller="RoomAndRateController">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="dropdown">
+                <a class="dropdown-toggle btn btn-primary">
+                    {{(start|date:"yyyy년 M월 d일")||"날짜를 선택해주세요"}} ~ {{(end|date:"yyyy년 M월 d일")||"날짜를 선택해주세요"}}
+                </a>
+
+                <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation()">
+                    <div date-range start="start" end="end"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="pull-right">
+                <span class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-init="showDetail = true" ng-model="showDetail"> 상세
+                    </label>
+                </span>
+
+                 <span class="checkbox">
+                    <label>
+                        <input ng-model="showMonth" type="checkbox"> 월
+                    </label>
+                </span>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th ng-click="dayToggle(0)">Mon</th>
+                    <th ng-click="dayToggle(1)">Tue</th>
+                    <th ng-click="dayToggle(2)">Wed</th>
+                    <th ng-click="dayToggle(3)">Thur</th>
+                    <th ng-click="dayToggle(4)">Fri</th>
+                    <th ng-click="dayToggle(5)">Sat</th>
+                    <th ng-click="dayToggle(6)">Sun</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="buffer"></tr>
+                <tr ng-repeat="week in days">
+                    <th ng-click="weekToggle(week)">Week{{days.indexOf(week)+1}}</th>
+                    <td ng-click="day.toggle()" ng-repeat="day in week"
+                        ng-class="{select:day.select, done:day.info.done(), process:day.info.process()}">
+                        <span ng-show="day.date.getDate()">
+                            <span ng-show="showMonth">{{day.date.getMonth()+1}}월</span> {{day.date.getDate()}}일
+                            <div class="detail" ng-show="showDetail">
+                                <div ng-show="day.info.allotment"><i class="fa fa-building"></i> {{day.info.allotment}}
+                                </div>
+                                <div ng-show="day.info.sellstate"><i class="fa fa-question"></i>
+                                    {{day.info.sellstate.name}}
+                                </div>
+                                <div ng-show="day.info.cutoff"><i class="fa fa-exclamation-circle"></i>
+                                    {{day.info.cutoff}}
+                                </div>
+                                <div ng-show="day.info.fee"><i class="fa fa-krw"></i> {{day.info.fee}}</div>
+                                <div ng-show="day.info.serviceTypes">
+                                    <div ng-repeat="type in day.info.serviceTypes">{{type.name}}</div>
+                                </div>
+                            </div>
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-default" id="update">
+                <div class="panel-heading">업데이트</div>
+
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <th class="th none-border">선택 날짜</th>
+                            <td class="none-border">
+                             <span ng-repeat="week in days">
+                            <span class="btn btn-border" ng-repeat="day in week" ng-click="day.toggle()"
+                                  ng-show="day.select">
+                            <span ng-show="showMonth">{{day.date.getMonth()+1}}월</span>
+                            {{day.date.getDate()}}일 </span></span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="th"><i class="fa fa-building"></i> 객실수</th>
+
+                            <td>
+                                <div class="form-group">
+                                    <input ng-model="allotment" ng-change="update()" type="text" class="form-control"
+                                           placeholder="객실 수">
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="th"> 상품 종류</th>
+
+                            <td>
+                                <span ng-repeat="type in serviceType" class="checkbox">
+                                    <label>
+                                        <input ng-change="update()" ng-model="type.select" type="checkbox">
+                                        {{type.name}}
+                                    </label>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="th"><i class="fa fa-question"></i> 판매상태</th>
+
+                            <td>
+                                <select class="form-control" ng-change="update()" ng-model="sellstate"
+                                        ng-init="sellstate = selloptions[0]"
+                                        ng-options="option.name for option in selloptions">
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="th"><i class="fa fa-exclamation-circle"></i> Cut Off</th>
+
+                            <td>
+                                <div class="form-group">
+                                    <input ng-model="cutoff" ng-change="update()" type="text" class="form-control"
+                                           placeholder="Cut Off">
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="th">
+                                <select class="form-control" ng-model="feetype" ng-init="feetype = feeoptions[0]"
+                                        ng-options="option.name for option in feeoptions">
+                                </select>
+                            </th>
+
+                            <td>
+                                <div class="form-group">
+                                    <input ng-model="fee" ng-change="update()" type="text" class="form-control"
+                                           placeholder="가격">
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="js/proto.js"></script>
+<script src="plugin/angular/angular.js"></script>
+<script src="plugin/angular/ui-bootstrap-tpls.min.js"></script>
+<script src="plugin/jquery/jquery.js"></script>
+<script src="plugin/jquery/zebra_pin.js"></script>
+<!-- build:js module.min.js -->
+<script src="plugin/angular/datepicker/scripts/datePicker.js"></script>
+<script src="plugin/angular/datepicker/scripts/datePickerUtils.js"></script>
+<script src="plugin/angular/datepicker/scripts/dateRange.js"></script>
+<script src="plugin/angular/datepicker/scripts/input.js"></script>
+<script src="js/roomandrates.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+.select {
+    border: 2px solid red !important;
+}
+
+.checkbox-inline {
+    display: inline-block;
+    margin: 10px;
+}
+
+.btn-border {
+    border: 1px solid #c0c0c0;
+}
+
+.options {
+    text-align: center;
+    line-height: 30px;
+}
+
+.th {
+    min-width: 90px;
+}
+
+.none-border {
+    border-top: none !important;
+}
+
+.green {
+    color: green;
+}
+
+.buffer {
+    height: 0px;
+    display: block;
+    background-color: #eee;
+}
+
+.done {
+    background-color: #DFF0D8;
+}
+
+.process {
+    background-color: #FCF8E3;
+}
+
+.detail{
+    padding:2px;
+    font-size:11px;
+}
